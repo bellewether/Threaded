@@ -8,7 +8,9 @@ class SongsController < ApplicationController
   end
 
   def show
-
+    id = params[:id]
+    result = Song.find(id)
+    render json: result
   end
 
 end

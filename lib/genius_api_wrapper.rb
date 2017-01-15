@@ -21,5 +21,43 @@ class GeniusApiWrapper
   end
 
   # find function to return a specific song
+  def self.find(id)
+    url = "#{ BASE_URL }/songs/" + "#{ id }" #+ "&to=100"
+    data = HTTParty.get(url, :headers => { "Authorization" => "Bearer #{ TOKEN }" })
+
+    # Song object: genius_id, song_title, primary_artist, release_date, album, song_description, sample_type
+    found_song = Song.new(genius_id: data["response"]["song"]["id"],
+      song_title: data["response"]["song"]["title"],
+      primary_artist: data["response"]["song"]["primary_artist"]["name"],
+      release_date: data["response"]["song"]["release_date"],
+      album: data["response"]["song"]["album"]["name"])
+
+    # iterate over all relationships to create
+    # Sample object: genius_id, song_title, primary_artist, ~ song_id
+    found_song_samples = []
+    song_relationships_array = data["response"]["song"]["song_relationships"]
+    song_relationships_array.each do |obj|
+      obj["songs"].each do |sample|
+        wrapper = Sample.new(genius_id: sample["id"], song_title: sample["title"], primary_artist: sample["primary_artist"]["name"], song_id: found_song.genius_id)
+        found_song_samples << wrapper
+      end
+    end
+
+    found_song_data = { "song" => found_song, "samples" => found_song_samples }
+    return found_song_data
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end
