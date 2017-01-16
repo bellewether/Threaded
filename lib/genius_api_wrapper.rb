@@ -39,6 +39,7 @@ class GeniusApiWrapper
     song_relationships_array.each do |obj|
       obj["songs"].each do |sample|
         wrapper = Sample.new(genius_id: sample["id"], song_title: sample["title"], primary_artist: sample["primary_artist"]["name"], song_id: found_song.genius_id)
+        wrapper.save
         found_song_samples << wrapper
       end
     end

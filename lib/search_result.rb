@@ -1,9 +1,9 @@
 class SearchResult
-  attr_reader :full_title, :genius_id, :title, :primary_artist
+  attr_reader :full_title, :id, :title, :primary_artist
 
-  def initialize(full_title, genius_id, title, primary_artist)
+  def initialize(full_title, id, title, primary_artist)
     @full_title = full_title
-    @genius_id = genius_id
+    @id = id
     @title = title
     @primary_artist = primary_artist
   end
