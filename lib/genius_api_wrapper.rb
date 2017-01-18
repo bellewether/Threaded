@@ -31,6 +31,7 @@ class GeniusApiWrapper
       primary_artist: data["response"]["song"]["primary_artist"]["name"],
       release_date: data["response"]["song"]["release_date"],
       album: data["response"]["song"]["album"]["name"])
+    found_song.save
 
     # iterate over all relationships to create
     # Sample object: genius_id, song_title, primary_artist, ~ song_id
@@ -46,6 +47,7 @@ class GeniusApiWrapper
 
     found_song_data = { "song" => found_song, "samples" => found_song_samples }
     return found_song_data
+    # return { "song" => found_song }
   end
 
 

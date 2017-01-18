@@ -10,6 +10,7 @@ class SongsController < ApplicationController
   def show
     id = params[:id]
     result = Song.find(id)
+    # render :json => result, :include => [:samples]
     render json: result
   end
 
