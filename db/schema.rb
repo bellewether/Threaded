@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170114013503) do
+ActiveRecord::Schema.define(version: 20170122195122) do
 
   create_table "samples", force: :cascade do |t|
     t.integer  "genius_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170114013503) do
     t.integer  "song_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "sample_type"
   end
 
   add_index "samples", ["song_id"], name: "index_samples_on_song_id"

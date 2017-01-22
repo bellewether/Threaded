@@ -34,14 +34,28 @@ class GeniusApiWrapper
     found_song.save
 
     # iterate over all relationships to create
-    # Sample object: genius_id, song_title, primary_artist, ~ song_id
+    # Sample object: genius_id, song_title, primary_artist, ~ song_id,
     found_song_samples = []
     song_relationships_array = data["response"]["song"]["song_relationships"]
     song_relationships_array.each do |obj|
-      obj["songs"].each do |sample|
-        wrapper = Sample.new(genius_id: sample["id"], song_title: sample["title"], primary_artist: sample["primary_artist"]["name"], song_id: found_song.genius_id)
-        wrapper.save
-        found_song_samples << wrapper
+      if obj["type"] == "samples" || obj["type"] == "interpolates"
+        obj["songs"].each do |sample|
+          wrapper = Sample.new(genius_id: sample["id"], song_title: sample["title"], primary_artist: sample["primary_artist"]["name"], song_id: found_song.genius_id, sample_type: "parent")
+          wrapper.save
+          found_song_samples << wrapper
+        end
+      elsif obj["type"] == "sampled_in" || obj["type"] == "interpolated_by"
+        obj["songs"].each do |sample|
+          wrapper = Sample.new(genius_id: sample["id"], song_title: sample["title"], primary_artist: sample["primary_artist"]["name"], song_id: found_song.genius_id, sample_type: "child")
+          wrapper.save
+          found_song_samples << wrapper
+        end
+      elsif obj["type"] == "cover_of"
+        obj["songs"].each do |sample|
+          wrapper = Sample.new(genius_id: sample["id"], song_title: sample["title"], primary_artist: sample["primary_artist"]["name"], song_id: found_song.genius_id, sample_type: "cover")
+          wrapper.save
+          found_song_samples << wrapper
+        end
       end
     end
 
