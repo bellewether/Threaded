@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20170122195122) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "samples", force: :cascade do |t|
     t.integer  "genius_id"
     t.string   "song_title"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170122195122) do
     t.string   "sample_type"
   end
 
-  add_index "samples", ["song_id"], name: "index_samples_on_song_id"
+  add_index "samples", ["song_id"], name: "index_samples_on_song_id", using: :btree
 
   create_table "songs", force: :cascade do |t|
     t.integer  "genius_id"
