@@ -62,19 +62,6 @@ class GeniusApiWrapper
     found_song_data = { "song" => found_song, "samples" => found_song_samples }
     return found_song_data
     # return { "song" => found_song }
+
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end
