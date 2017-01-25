@@ -25,5 +25,11 @@ module Threaded
 
     # Automatically load all code from <rails_root>/lib
     config.autoload_paths << Rails.root.join('lib')
+
+    config.action_dispatch.default_headers.merge!({
+      'Access-Control-Allow-Origin' => '*',
+      'Access-Control-Request-Method' => '*'
+    })
+    
   end
 end
